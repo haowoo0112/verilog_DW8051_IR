@@ -1,0 +1,69 @@
+
+State Machine - |chiptop|sfr_mem_IR:u1_sfr_mem|lab3:u1|state
+Name state.00 state.10 state.01 
+state.00 0 0 0 
+state.01 1 0 1 
+state.10 1 1 0 
+
+State Machine - |chiptop|DW8051_core:u0|DW8051_serial:i_serial2|rx_state
+Name rx_state.11 rx_state.10 rx_state.01 rx_state.00 
+rx_state.00 0 0 0 0 
+rx_state.01 0 0 1 1 
+rx_state.10 0 1 0 1 
+rx_state.11 1 0 0 1 
+
+State Machine - |chiptop|DW8051_core:u0|DW8051_serial:i_serial2|tx_state
+Name tx_state.101 tx_state.100 tx_state.011 tx_state.010 tx_state.001 tx_state.000 
+tx_state.000 0 0 0 0 0 0 
+tx_state.001 0 0 0 0 1 1 
+tx_state.010 0 0 0 1 0 1 
+tx_state.011 0 0 1 0 0 1 
+tx_state.100 0 1 0 0 0 1 
+tx_state.101 1 0 0 0 0 1 
+
+State Machine - |chiptop|DW8051_core:u0|DW8051_serial:i_serial1|rx_state
+Name rx_state.11 rx_state.10 rx_state.01 rx_state.00 
+rx_state.00 0 0 0 0 
+rx_state.01 0 0 1 1 
+rx_state.10 0 1 0 1 
+rx_state.11 1 0 0 1 
+
+State Machine - |chiptop|DW8051_core:u0|DW8051_serial:i_serial1|tx_state
+Name tx_state.101 tx_state.100 tx_state.011 tx_state.010 tx_state.001 tx_state.000 
+tx_state.000 0 0 0 0 0 0 
+tx_state.001 0 0 0 0 1 1 
+tx_state.010 0 0 0 1 0 1 
+tx_state.011 0 0 1 0 0 1 
+tx_state.100 0 1 0 0 0 1 
+tx_state.101 1 0 0 0 0 1 
+
+State Machine - |chiptop|DW8051_core:u0|DW8051_intr_1:i_intr1|i_src_l
+Name i_src_l.1100 i_src_l.1011 i_src_l.1010 i_src_l.1001 i_src_l.1000 i_src_l.0111 i_src_l.0110 i_src_l.0101 i_src_l.0100 i_src_l.0011 i_src_l.0010 i_src_l.0001 i_src_l.0000 
+i_src_l.0000 0 0 0 0 0 0 0 0 0 0 0 0 0 
+i_src_l.0001 0 0 0 0 0 0 0 0 0 0 0 1 1 
+i_src_l.0010 0 0 0 0 0 0 0 0 0 0 1 0 1 
+i_src_l.0011 0 0 0 0 0 0 0 0 0 1 0 0 1 
+i_src_l.0100 0 0 0 0 0 0 0 0 1 0 0 0 1 
+i_src_l.0101 0 0 0 0 0 0 0 1 0 0 0 0 1 
+i_src_l.0110 0 0 0 0 0 0 1 0 0 0 0 0 1 
+i_src_l.0111 0 0 0 0 0 1 0 0 0 0 0 0 1 
+i_src_l.1000 0 0 0 0 1 0 0 0 0 0 0 0 1 
+i_src_l.1001 0 0 0 1 0 0 0 0 0 0 0 0 1 
+i_src_l.1010 0 0 1 0 0 0 0 0 0 0 0 0 1 
+i_src_l.1011 0 1 0 0 0 0 0 0 0 0 0 0 1 
+i_src_l.1100 1 0 0 0 0 0 0 0 0 0 0 0 1 
+
+State Machine - |chiptop|DW8051_core:u0|DW8051_intr_0:i_intr0|i_src_l
+Name i_src_l.101 i_src_l.100 i_src_l.011 i_src_l.010 i_src_l.001 i_src_l.000 
+i_src_l.000 0 0 0 0 0 0 
+i_src_l.001 0 0 0 0 1 1 
+i_src_l.010 0 0 0 1 0 1 
+i_src_l.011 0 0 1 0 0 1 
+i_src_l.100 0 1 0 0 0 1 
+i_src_l.101 1 0 0 0 0 1 
+
+State Machine - |chiptop|DW8051_core:u0|DW8051_cpu:i_cpu|DW8051_biu:i_biu|bus_seq
+Name bus_seq.00 bus_seq.10 bus_seq.01 
+bus_seq.00 0 0 0 
+bus_seq.01 1 0 1 
+bus_seq.10 1 1 0 

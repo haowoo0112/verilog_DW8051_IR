@@ -1,0 +1,230 @@
+`timescale 1ns / 10ps
+module chiptop(
+  input CLOCK_50,
+  input  [3:0]KEY,
+  input IRDA_RXD,
+
+  output LCD_BLON,
+  output [7:0]LCD_DATA,
+  output LCD_EN,
+  output LCD_ON,
+  output LCD_RS,
+  output LCD_RW
+);
+
+  /***************************signal**********************************/
+  //interrupt
+  wire                       int0_n       ;
+  wire                       int1_n       ;
+  
+  //serial port 0
+  wire                       rxd0_in      ;
+  wire                       rxd0_out     ;
+  wire                       txd0         ;
+  
+  //timer0/1
+  wire                       t0           ;
+  wire                       t1           ;
+  wire                       t0_out       ;
+  wire                       t1_out       ;
+  
+  //interal ram , no read enable signal
+  wire [ 7:0]                ram_addr     ;
+  wire [ 7:0]                ram_data_out ;
+  wire [ 7:0]                ram_data_in  ;
+  wire                       ram_wen      ;
+  
+  //interal rom
+  wire [13-1:0] rom_addr     ;
+  wire [ 7:0]                rom_data     ;
+  wire                       rom_rd_n     ;
+  
+  //sfr signal
+  wire [ 7:0]                sfr_addr;     
+  wire [ 7:0]                sfr_data_out ;
+  wire [ 7:0]                sfr_data_in  ;
+  wire                       sfr_wr       ;
+  wire                       sfr_rd       ;
+  
+  //external ram interface   or user-defined peripheral reg
+  wire [15:0]                mem_addr     ;
+  wire [ 7:0]                mem_data_out ;
+  wire [ 7:0]                mem_data_in  ;
+  wire                       mem_wr_n     ;
+  wire                       mem_rd_n     ;
+
+
+  wire por_n=KEY[0]; 
+  wire rst_in_n=KEY[0]; 
+  wire rst_n;
+  wire rst_out_n; 
+  wire test_mode_n=1'b1; 
+  wire stop_mode_n; 
+  wire idle_mode_n; 
+
+
+
+  wire mem_wr_r; 
+  wire mem_pswr_n;    
+  
+  wire mem_psrd_n; 
+  wire mem_ale; 
+  wire mem_ea_n=1'b1;   
+  wire int2; 
+  wire int3_n; 
+  wire int4; 
+  wire int5_n; 
+  wire pfi; 
+  wire wdti; 
+  wire rxd1_in; 
+  wire rxd1_out, txd1;  
+  wire t2; 
+  wire t2ex; 
+  wire t2_out; 
+  wire port_pin_reg_n, p0_mem_reg_n, p0_addr_data_n, p2_mem_reg_n; 
+  wire [7:0] iram_addr, iram_data_out, iram_data_in; 
+  wire iram_rd_n, iram_we1_n, iram_we2_n; 
+  wire [15:0] irom_addr; 
+  wire [7:0] irom_data_out; 
+  wire irom_rd_n, irom_cs_n; 
+
+  //interrupt
+  assign int0_n = 1'b1;
+  assign int1_n = 1'b1;
+  
+  //serial port 0
+  assign rxd0_in = 1'b0;
+  
+  //timer0/1
+  assign t0 = 1'b1;
+  assign t1 = 1'b1;
+  
+  //sfr signal
+  
+
+  `ifdef FPGA_DEBUG
+    
+  `else
+    assign rst_n = KEY[0];
+  `endif
+
+  DW8051_core u0 ( 
+               .clk (CLOCK_50), 
+               .por_n (por_n), 
+               .rst_in_n (rst_in_n), 
+               .rst_out_n (rst_out_n), 
+               .test_mode_n (test_mode_n), 
+               .stop_mode_n (stop_mode_n), 
+               .idle_mode_n (idle_mode_n), 
+               .sfr_addr (sfr_addr), 
+               .sfr_data_out (sfr_data_out), 
+               .sfr_data_in (sfr_data_in), 
+               .sfr_wr (sfr_wr), 
+               .sfr_rd (sfr_rd), 
+               .mem_addr (mem_addr), 
+               .mem_data_out (mem_data_out), 
+               .mem_data_in (mem_data_in), 
+               .mem_wr_n (mem_wr_n), 
+               .mem_rd_n (mem_rd_n), 
+               .mem_pswr_n (mem_pswr_n), 
+               .mem_psrd_n (mem_psrd_n), 
+               .mem_ale (mem_ale), 
+               .mem_ea_n (mem_ea_n),
+               .int0_n (int0_n), 
+               .int1_n (int1_n), 
+               .int2 (int2), 
+               .int3_n (int3_n), 
+               .int4 (int4), 
+               .int5_n (int5_n), 
+               .pfi (pfi), 
+               .wdti (wdti), 
+               .rxd0_in (rxd0_in), 
+               .rxd0_out (rxd0_out), 
+               .txd0 (txd0), 
+               .rxd1_in (rxd1_in), 
+               .rxd1_out (rxd1_out), 
+               .txd1 (txd1), 
+               .t0 (t0), 
+               .t1 (t1), 
+               .t2 (t2), 
+               .t2ex (t2ex), 
+               .t0_out (t0_out), 
+               .t1_out (t1_out), 
+               .t2_out (t2_out), 
+               .port_pin_reg_n (port_pin_reg_n), 
+               .p0_mem_reg_n (p0_mem_reg_n), 
+               .p0_addr_data_n (p0_addr_data_n), 
+               .p2_mem_reg_n (p2_mem_reg_n), 
+               .iram_addr (iram_addr), 
+               .iram_data_out (iram_data_out), 
+               .iram_data_in (iram_data_in), 
+               .iram_rd_n (), 
+               .iram_we1_n (iram_we1_n), 
+               .iram_we2_n (iram_we2_n), 
+               .irom_addr (irom_addr), 
+               .irom_data_out (irom_data_out), 
+               .irom_rd_n (irom_rd_n), 
+               .irom_cs_n (irom_cs_n) 
+               );
+
+  int_mem      u3_int_mem(
+                        .clk(CLOCK_50),
+                        .addr(iram_addr),
+                        .data_in(iram_data_in),
+                        .data_out(iram_data_out),
+                        .we1_n(iram_we1_n),
+                        .we2_n(iram_we2_n),
+                        .rd_n(iram_rd_n));  
+  rom_mem       u4_rom_mem(
+                        .addr(irom_addr),
+                        .data_out(irom_data_out),                    
+                        .rd_n(irom_rd_n),
+                        .cs_n(irom_cs_n));  
+								
+
+/*
+ram      u3_int_mem(.address (iram_addr    ),
+							.clock   (~clk         ),
+							.data    (iram_data_in ),
+							.wren    (~ram_wen     ),
+							.q       (iram_data_out) );  
+  rom       u4_rom_mem(
+                        .address(irom_addr ),
+								.clken  (~irom_rd_n),
+								.clock  (clk       ),
+								.q      (irom_data_out ));  */
+
+  sfr_mem_IR u1_sfr_mem(
+    .clk(CLOCK_50),
+    .addr(sfr_addr),     
+    .D_IN(sfr_data_out),
+    .D_OUT(sfr_data_in),
+    .sfr_wr(sfr_wr),
+    .sfr_rd(sfr_rd),
+    .KEY(KEY),
+    .ir_read(IRDA_RXD),
+    .LCD_BLON(LCD_BLON),
+    .LCD_DATA(LCD_DATA),
+    .LCD_EN(LCD_EN),
+    .LCD_ON(LCD_ON),
+    .LCD_RS(LCD_RS),
+    .LCD_RW(LCD_RW)
+    );
+  /*
+  sfr_mem_lcm u2_sfr_mem(
+    .clk(CLOCK_50),
+    .addr(sfr_addr),     
+    .D_IN(sfr_data_out),
+    .D_OUT(sfr_data_in),
+    .sfr_wr(sfr_wr),
+    .sfr_rd(sfr_rd),
+    .KEY(KEY),
+    .LCD_BLON(LCD_BLON),
+    .LCD_DATA(LCD_DATA),
+    .LCD_EN(LCD_EN),
+    .LCD_ON(LCD_ON),
+    .LCD_RS(LCD_RS),
+    .LCD_RW(LCD_RW)
+    );
+    */
+endmodule

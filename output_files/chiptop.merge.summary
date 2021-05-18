@@ -1,0 +1,14 @@
+Partition Merge Status : Successful - Wed May 12 20:28:50 2021
+Quartus Prime Version : 18.1.0 Build 625 09/12/2018 SJ Lite Edition
+Revision Name : chiptop
+Top-level Entity Name : chiptop
+Family : Cyclone IV E
+Total logic elements : 7,526
+    Total combinational functions : 4,196
+    Dedicated logic registers : 4,944
+Total registers : 4944
+Total pins : 19
+Total virtual pins : 0
+Total memory bits : 44,032
+Embedded Multiplier 9-bit elements : 0
+Total PLLs : 0
